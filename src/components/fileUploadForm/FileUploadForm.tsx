@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ChangeEvent, FormEvent} from "react";
 import {Box, Button, Container, TextField} from "@mui/material";
 import { styled } from '@mui/material/styles';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -17,26 +17,31 @@ const VisuallyHiddenInput = styled('input')({
     width: 1,
 });
 
-function FileUploadHome() {
-    const [form, setForm] = React.useState({file: null, compressRatio: 0});
 
-    const onFormChange = (e) => {
+function FileUploadHome() {
+    const [form, setForm] = React.useState<FileUploadFormData>();
+
+    const onFormChange = (e: ChangeEvent<HTMLInputElement>) => {
+        //@ts-ignore
         setForm({...form, [e.target.name]: e.target.value});
     };
 
-    const onFileChange = (e) => {
+    const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+        //@ts-ignore
         setForm({...form, file: e.target.files[0]});
     };
 
-    const onSubmit = (event) => {
+    const onSubmit = (event: FormEvent) => {
         event.preventDefault();
-        getBase64(form.file).then((fileInBase64) => {
-            uploadFile({...form, file: fileInBase64}).then((response) => {
-                console.log(response);
-            }).catch((error) => {
-                console.log(error);
+        if (form) {
+            getBase64(form.file).then((fileInBase64) => {
+                uploadFile({...form, file: fileInBase64}).then((response) => {
+                    console.log(response);
+                }).catch((error) => {
+                    console.log(error);
+                });
             });
-        });
+        }
     };
 
     return (
@@ -50,7 +55,6 @@ function FileUploadHome() {
                 name={"compressRatio"}
                 onChange={onFormChange}
             />
-
             <Button
                 component="label"
                 role={undefined}
