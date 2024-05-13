@@ -4,6 +4,7 @@ import { styled } from '@mui/material/styles';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import {uploadFile} from "../../api";
 import getBase64 from "../../utils/getBase64";
+import {FileUploadFormData} from "../../interfaces/fileUploadFormData";
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -35,7 +36,13 @@ function FileUploadHome() {
         event.preventDefault();
         if (form) {
             getBase64(form.file).then((fileInBase64) => {
-                uploadFile({...form, file: fileInBase64}).then((response) => {
+                uploadFile({
+                    ...form,
+                    fileData: fileInBase64,
+                    fileName: form.file.name,
+                    fileType: form.file.type,
+                    fileSize: form.file.size,
+                }).then((response) => {
                     console.log(response);
                 }).catch((error) => {
                     console.log(error);

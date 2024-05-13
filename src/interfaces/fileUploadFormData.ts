@@ -1,1 +1,1 @@
-interface FileUploadFormData {file: File, compressRatio: string};
+export interface FileUploadFormData {file: File, compressRatio: string}
