@@ -1,7 +1,7 @@
 import {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {getFileList} from "../../api";
 import {File} from "../../interfaces/File";
-import {Card, CardActions, CardContent, Typography} from "@mui/material";
+import FileCard from "../fileCard/FileCard";
 
 interface Props  {
     setSnackbarOption: Dispatch<SetStateAction<{}>>
@@ -19,20 +19,7 @@ function FileList({ setSnackbarOption }: Props) {
     }, [setSnackbarOption]);
 
     return (
-         files && files.map((file: File) => (<Card sx={{ minWidth: 275 }} key={file.id}>
-            <CardContent>
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                    {file.fileName}
-                </Typography>
-                <Typography variant="body2">
-                    {file.fileType}
-                </Typography>
-                <Typography variant="body2">
-                    {file.fileSize}
-                </Typography>
-                <CardActions></CardActions>
-            </CardContent>
-        </Card>))
+         files && files.map((file: File) => (<FileCard file={file} key={file.id}/>))
     );
 }
 
