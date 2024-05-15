@@ -1,8 +1,17 @@
 import FileUploadForm from "../fileUploadForm/FileUploadForm";
+import FileList from "../fileList/FileList";
+import {Dispatch, SetStateAction} from "react";
 
-function FileUploadHome() {
+interface Props  {
+    setSnackbarOption: Dispatch<SetStateAction<{}>>
+}
+
+function FileUploadHome({setSnackbarOption}: Props) {
     return (
-        <FileUploadForm />
+        <>
+            <FileUploadForm setSnackbarOption={setSnackbarOption}/>
+            <FileList setSnackbarOption={setSnackbarOption}/>
+        </>
     );
 }
 

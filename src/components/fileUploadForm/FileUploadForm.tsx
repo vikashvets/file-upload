@@ -1,10 +1,10 @@
-import React, {ChangeEvent, FormEvent} from "react";
+import React, {ChangeEvent, Dispatch, FormEvent, SetStateAction} from "react";
 import {Box, Button, Container, TextField} from "@mui/material";
 import { styled } from '@mui/material/styles';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import {uploadFile} from "../../api";
 import getBase64 from "../../utils/getBase64";
-import {FileUploadFormData} from "../../interfaces/fileUploadFormData";
+import {FileUploadFormData} from "../../interfaces/FileUploadFormData";
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -18,8 +18,11 @@ const VisuallyHiddenInput = styled('input')({
     width: 1,
 });
 
+interface Props  {
+    setSnackbarOption: Dispatch<SetStateAction<{}>>
+}
 
-function FileUploadHome() {
+function FileUploadHome({ setSnackbarOption }: Props) {
     const [form, setForm] = React.useState<FileUploadFormData>();
 
     const onFormChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -37,7 +40,7 @@ function FileUploadHome() {
         if (form) {
             getBase64(form.file).then((fileInBase64) => {
                 uploadFile({
-                    ...form,
+                    compressRatio: form.compressRatio,
                     fileData: fileInBase64,
                     fileName: form.file.name,
                     fileType: form.file.type,
@@ -45,7 +48,7 @@ function FileUploadHome() {
                 }).then((response) => {
                     console.log(response);
                 }).catch((error) => {
-                    console.log(error);
+                    setSnackbarOption({ open: true, message: error.message, severity: 'error' });
                 });
             });
         }
