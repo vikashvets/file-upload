@@ -1,5 +1,14 @@
 import React, {ChangeEvent, Dispatch, FormEvent, SetStateAction} from "react";
-import {Box, Button, Container, TextField} from "@mui/material";
+import {
+    Box,
+    Button,
+    Container,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+    SelectChangeEvent,
+} from "@mui/material";
 import { styled } from '@mui/material/styles';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import {uploadFile} from "../../api";
@@ -22,29 +31,29 @@ interface Props  {
     setSnackbarOption: Dispatch<SetStateAction<{}>>
 }
 
-function FileUploadHome({ setSnackbarOption }: Props) {
-    const [form, setForm] = React.useState<FileUploadFormData>();
+function FileUploadForm({ setSnackbarOption }: Props) {
+    const [form, setForm] = React.useState<FileUploadFormData>({compressRatio: 0, file: undefined});
 
-    const onFormChange = (e: ChangeEvent<HTMLInputElement>) => {
-        //@ts-ignore
+    const onFormChange = (e: SelectChangeEvent) => {
         setForm({...form, [e.target.name]: e.target.value});
     };
 
     const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-        //@ts-ignore
-        setForm({...form, file: e.target.files[0]});
+        setForm({...form, file: e.target.files ? e.target.files[0] : undefined});
     };
+
+    const availableCompressionRatios = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
     const onSubmit = (event: FormEvent) => {
         event.preventDefault();
-        if (form) {
+        if (form?.file) {
             getBase64(form.file).then((fileInBase64) => {
                 uploadFile({
                     compressRatio: form.compressRatio,
                     fileData: fileInBase64,
-                    fileName: form.file.name,
-                    fileType: form.file.type,
-                    fileSize: form.file.size,
+                    fileName: form!.file!.name,
+                    fileType: form!.file!.type,
+                    fileSize: form!.file!.size,
                 }).then((response) => {
                     console.log(response);
                 }).catch((error) => {
@@ -58,13 +67,22 @@ function FileUploadHome({ setSnackbarOption }: Props) {
         <Container>
         <Box className="fileUploadForm" sx={{display: 'flex', flexFlow: 'column', maxWidth: '300px', gap: '16px'}}>
             <form onSubmit={onSubmit}>
-            <TextField
-                label="Compress ratio"
-                variant="outlined"
-                type={"number"}
-                name={"compressRatio"}
-                onChange={onFormChange}
-            />
+                <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+                    <InputLabel id="compressionRatioSelectLabel">Compress ratio</InputLabel>
+                    <Select
+                        labelId="compressionRatioSelectLabel"
+                        id="compressionRatioSelect"
+                        type={"number"}
+                        name={"compressRatio"}
+                        onChange={onFormChange}
+                        value={form?.compressRatio.toString()}
+                    >
+                        {availableCompressionRatios.map((ratio) => (
+                            <MenuItem key={ratio} value={ratio}>{ratio}</MenuItem>)
+                        )}
+                    </Select>
+                </FormControl>
+
             <Button
                 component="label"
                 role={undefined}
@@ -87,4 +105,4 @@ function FileUploadHome({ setSnackbarOption }: Props) {
     );
 }
 
-export default FileUploadHome;
+export default FileUploadForm;
