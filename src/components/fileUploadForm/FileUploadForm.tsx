@@ -48,7 +48,7 @@ function FileUploadHome({ setSnackbarOption }: Props) {
                 }).then((response) => {
                     console.log(response);
                 }).catch((error) => {
-                    setSnackbarOption({ open: true, message: error.message, severity: 'error' });
+                    setSnackbarOption({snackbar: { open: true },  alert: { severity: 'error' }, content: error.message});
                 });
             });
         }

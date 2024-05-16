@@ -14,7 +14,7 @@ function FileList({ setSnackbarOption }: Props) {
         getFileList().then((response) => {
             setFiles(response.data);
         }).catch((error) => {
-            setSnackbarOption({ open: true, message: error.message, severity: 'error' });
+            setSnackbarOption({ snackbar: { open: true },  alert: { severity: 'error' }, content: error.message});
         });
     }, [setSnackbarOption]);
 
