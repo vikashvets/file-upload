@@ -19,7 +19,9 @@ function FileList({ setSnackbarOption }: Props) {
     }, [setSnackbarOption]);
 
     return (
-         files && files.map((file: File) => (<FileCard file={file} key={file.id}/>))
+        <>
+            {files && files.map((file: File) => (<FileCard file={file} key={file.id}/>))}
+        </>
     );
 }
 

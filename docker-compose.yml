@@ -1,0 +1,11 @@
+services:
+  app:
+    container_name: file-upload-ui
+    build:
+      context: ./
+    ports:
+      - 3000:80
+    environment:
+      REACT_APP_API_URL: http://localhost:3001
+      REACT_APP_WS_API_URL: ws://localhost:8080
+
