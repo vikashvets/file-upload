@@ -1,4 +1,3 @@
-import FileUploadForm from "../fileUploadForm/FileUploadForm";
 import FileList from "../fileList/FileList";
 import {Dispatch, SetStateAction} from "react";
 
@@ -9,7 +8,6 @@ interface Props  {
 function FileUploadHome({setSnackbarOption}: Props) {
     return (
         <>
-            <FileUploadForm setSnackbarOption={setSnackbarOption}/>
             <FileList setSnackbarOption={setSnackbarOption}/>
         </>
     );

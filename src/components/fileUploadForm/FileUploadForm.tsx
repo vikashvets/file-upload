@@ -2,30 +2,52 @@ import React, {ChangeEvent, Dispatch, FormEvent, SetStateAction} from "react";
 import {
     Box,
     Button,
-    Container,
+    Card,
+    CardContent,
     FormControl,
     InputLabel,
     MenuItem,
     Select,
-    SelectChangeEvent,
+    SelectChangeEvent, Typography,
 } from "@mui/material";
-import { styled } from '@mui/material/styles';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import {uploadFile} from "../../api";
 import getBase64 from "../../utils/getBase64";
 import {FileUploadFormData} from "../../interfaces/FileUploadFormData";
+import FileUpload from "../uploadedFile/FileUpload";
+import InputSubtitle from "../inputSubtitle/InputSubtitle";
 
-const VisuallyHiddenInput = styled('input')({
-    clip: 'rect(0 0 0 0)',
-    clipPath: 'inset(50%)',
-    height: 1,
-    overflow: 'hidden',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    whiteSpace: 'nowrap',
-    width: 1,
-});
+const styles = {
+    container: {
+        display: 'flex',
+        width: '100%',
+        minHeight: '100vh',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#f5f5f5',
+    },
+    card: {
+        minWidth: '300px',
+        width: '420px',
+        margin: '32px',
+        height: '100%',
+        padding: '32px 0',
+    },
+    form: {
+        paddingTop: '48px',
+        display: 'flex',
+        justifyContent: 'center',
+        flexFlow: 'column',
+        alignItems: 'center'
+    },
+    textFieldWrapper: {
+        display: 'flex',
+        flexFlow: 'column',
+        rowGap: '40px',
+        maxWidth: '255px',
+        minHeight: '230px',
+    },
+};
 
 interface Props  {
     setSnackbarOption: Dispatch<SetStateAction<{}>>
@@ -64,45 +86,49 @@ function FileUploadForm({ setSnackbarOption }: Props) {
     };
 
     return (
-        <Container>
-        <Box className="fileUploadForm" sx={{display: 'flex', flexFlow: 'column', maxWidth: '300px', gap: '16px'}}>
-            <form onSubmit={onSubmit}>
-                <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-                    <InputLabel id="compressionRatioSelectLabel">Compress ratio</InputLabel>
-                    <Select
-                        labelId="compressionRatioSelectLabel"
-                        id="compressionRatioSelect"
-                        type={"number"}
-                        name={"compressRatio"}
-                        onChange={onFormChange}
-                        value={form?.compressRatio.toString()}
-                    >
-                        {availableCompressionRatios.map((ratio) => (
-                            <MenuItem key={ratio} value={ratio}>{ratio}</MenuItem>)
-                        )}
-                    </Select>
-                </FormControl>
-
-            <Button
-                component="label"
-                role={undefined}
-                variant="contained"
-                tabIndex={-1}
-                startIcon={<CloudUploadIcon />}
-            >
-                Upload file
-                <VisuallyHiddenInput type="file" name={'file'} onChange={onFileChange}/>
-            </Button>
-
-            <Button
-                type={"submit"}
-            >
-                Save
-            </Button>
-            </form>
-        </Box>
-        </Container>
-    );
+        <Box sx={styles.container}>
+            <Card sx={styles.card}>
+                <CardContent sx={{padding: 0}}>
+                    <Typography variant="h4" component="h1" align="center" padding={'0px 16px'} >
+                        Compress your heavy files with us!
+                    </Typography>
+                    <form style={styles.form} onSubmit={onSubmit}>
+                        <Box sx={styles.textFieldWrapper}>
+                            <FormControl variant="filled" sx={{width: '100%', display: 'flex', flexFlow: 'column', alignItems: 'flex-start'}}>
+                                <InputLabel id="compressionRatioSelectLabel">Compress ratio</InputLabel>
+                                <Select
+                                    labelId="compressionRatioSelectLabel"
+                                    id="compressionRatioSelect"
+                                    type={"number"}
+                                    name={"compressRatio"}
+                                    onChange={onFormChange}
+                                    value={form?.compressRatio.toString()}
+                                    sx={{width: '100%', marginBottom: '8px'}}
+                                >
+                                    {availableCompressionRatios.map((ratio) => (
+                                        <MenuItem key={ratio} value={ratio}>{ratio}</MenuItem>)
+                                    )}
+                                </Select>
+                                <InputSubtitle>
+                                    Select compression level from 0 (fastest, largest) to 9 (slowest, smallest)
+                                </InputSubtitle>
+                            </FormControl>
+                            <Box>
+                                <FileUpload file={form.file} onFileChange={onFileChange}/>
+                                <Button
+                                    type={'submit'}
+                                    sx={{width: '100%', padding: '12px', marginTop: '40px'}}
+                                    variant="contained"
+                                    startIcon={<CloudUploadIcon/>}
+                                >
+                                    Upload file
+                                </Button>
+                            </Box>
+                    </Box>
+                    </form>
+                </CardContent>
+            </Card>
+        </Box>);
 }
 
 export default FileUploadForm;

@@ -4,6 +4,7 @@ import {Alert, Snackbar} from "@mui/material";
 import {useEffect, useState} from "react";
 import configureWsClient from "./configureWsClient";
 import {SnackbarConfig} from "./interfaces/SnackbarConfig";
+import FileUploadForm from "./components/fileUploadForm/FileUploadForm";
 
 function App() {
     const [snackbarOptions, setSnackbarOption] = useState<SnackbarConfig>({
@@ -34,7 +35,8 @@ function App() {
       <>
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<FileUploadHome setSnackbarOption={setSnackbarOption}/>} />
+                <Route path="/" element={<FileUploadHome setSnackbarOption={setSnackbarOption}/>} />
+                <Route path="/upload-file" element={<FileUploadForm setSnackbarOption={setSnackbarOption}/>} />
             </Routes>
           </BrowserRouter>
           <Snackbar
