@@ -37,7 +37,7 @@ function FileUpload({ file, onFileChange }: Props) {
                 Select file to compress. Currently system supports all image formats.
             </InputSubtitle>
             <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
-            <Button component={'label'} sx={{marginTop: '4px', padding: 0}}>
+            <Button component={'label'} sx={{marginTop: '4px', padding: 0, color: 'rgba(0, 0, 0, 0.8)'}}>
                 Select file
                 <VisuallyHiddenInput type="file" name={'file'} onChange={onFileChange}/>
             </Button>

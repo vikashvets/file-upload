@@ -80,7 +80,7 @@ function FileUploadForm({ setSnackbarOption }: Props) {
     return (
             <Card sx={styles.card}>
                 <CardContent sx={{padding: 0}}>
-                    <Typography variant="h4" component="h1" align="center" padding={'0px 16px'} >
+                    <Typography variant="h4" component="h1" align="center" padding={'0px 16px'} fontFamily={'"Raleway", cursive'} >
                         Compress your heavy files with us!
                     </Typography>
                     <form style={styles.form} onSubmit={onSubmit}>
@@ -95,7 +95,7 @@ function FileUploadForm({ setSnackbarOption }: Props) {
                                     name={"compressRatio"}
                                     onChange={onFormChange}
                                     value={form?.compressRatio.toString()}
-                                    sx={{width: '100%', marginBottom: '8px', backgroundColor: 'white'}}
+                                    sx={{width: '100%', marginBottom: '8px'}}
                                 >
                                     {availableCompressionRatios.map((ratio) => (
                                         <MenuItem key={ratio} value={ratio}>{ratio}</MenuItem>)
@@ -109,7 +109,7 @@ function FileUploadForm({ setSnackbarOption }: Props) {
                                 <FileUpload file={form.file} onFileChange={onFileChange}/>
                                 <Button
                                     type={'submit'}
-                                    sx={{width: '100%', padding: '12px', marginTop: '40px'}}
+                                    sx={{width: '100%', padding: '12px', marginTop: '40px', backgroundColor: '#a5e8ef', color: 'rgba(0, 0, 0, 0.8)'}}
                                     variant="contained"
                                     startIcon={<CloudUploadIcon/>}
                                 >

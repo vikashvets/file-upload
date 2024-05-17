@@ -6,6 +6,7 @@ import configureWsClient from "./configureWsClient";
 import {SnackbarConfig} from "./interfaces/SnackbarConfig";
 import FileUploadForm from "./components/fileUploadForm/FileUploadForm";
 import PageContainer from "./components/pageContainer/PageContainer";
+import './App.css';
 
 function App() {
     const [snackbarOptions, setSnackbarOption] = useState<SnackbarConfig>({
@@ -44,7 +45,7 @@ function App() {
       <>
           <BrowserRouter>
             <Routes>
-                <Route path="/" element={<FileUploadHome setSnackbarOption={setSnackbarOption}/>} />
+                <Route path="/" element={<PageContainer><FileUploadHome setSnackbarOption={setSnackbarOption}/></PageContainer>} />
                 <Route path="/upload-file" element={<PageContainer><FileUploadForm setSnackbarOption={setSnackbarOption}/></PageContainer>} />
             </Routes>
           </BrowserRouter>
