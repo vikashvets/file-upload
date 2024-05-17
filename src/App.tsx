@@ -1,10 +1,11 @@
 import {Route, Routes, BrowserRouter} from "react-router-dom";
 import FileUploadHome from "./components/fileUploadHome/FileUploadHome"
-import {Alert, Snackbar} from "@mui/material";
-import {useEffect, useState} from "react";
+import {Alert, Button, Snackbar} from "@mui/material";
+import React, {useEffect, useState} from "react";
 import configureWsClient from "./configureWsClient";
 import {SnackbarConfig} from "./interfaces/SnackbarConfig";
 import FileUploadForm from "./components/fileUploadForm/FileUploadForm";
+import PageContainer from "./components/pageContainer/PageContainer";
 
 function App() {
     const [snackbarOptions, setSnackbarOption] = useState<SnackbarConfig>({
@@ -26,8 +27,16 @@ function App() {
 
     useEffect(() => {
         configureWsClient( (data) => {
-            console.log(data);
-            setSnackbarOption({ snackbar: {open: true}, content: data, alert: {severity: 'success'} });
+            const content = <>
+                {data}
+                <Button
+                    component={'label'}
+                    onClick={() => { window.location.href = '/' } }
+                    sx={{ padding: 0, color: '#ffffff', textTransform: 'none', textDecoration: 'underline'}}>
+                    Click to go to uploaded files
+                </Button>
+                </>
+            setSnackbarOption({ snackbar: {open: true}, content, alert: {severity: 'success'} });
         })
     }, []);
 
@@ -36,7 +45,7 @@ function App() {
           <BrowserRouter>
             <Routes>
                 <Route path="/" element={<FileUploadHome setSnackbarOption={setSnackbarOption}/>} />
-                <Route path="/upload-file" element={<FileUploadForm setSnackbarOption={setSnackbarOption}/>} />
+                <Route path="/upload-file" element={<PageContainer><FileUploadForm setSnackbarOption={setSnackbarOption}/></PageContainer>} />
             </Routes>
           </BrowserRouter>
           <Snackbar
@@ -46,7 +55,7 @@ function App() {
           >
               <Alert
                   onClose={handleSnackbarClose}
-                  sx={{ width: '100%' }}
+                  sx={{ width: '100%', maxWidth: '320px' }}
                   severity={'success'}
                   variant={'filled'}
                   {...snackbarOptions.alert}
