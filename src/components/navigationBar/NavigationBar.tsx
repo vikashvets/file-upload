@@ -1,10 +1,5 @@
-import {Box, Breadcrumbs, Link, Typography} from "@mui/material";
-import React, { ReactNode} from "react";
-
-interface Props  {
-    children: ReactNode,
-    color?: string
-}
+import {Box, Breadcrumbs, Link, Typography, useMediaQuery} from "@mui/material";
+import React from "react";
 
 const styles={
     navigationContainer: {
@@ -25,6 +20,8 @@ const styles={
     },
     navigationLink: {
         transition: '0.3s',
+        padding: 1,
+        color: 'rgba(0, 0, 0, 0.7)',
         ":hover": {
             textDecoration: 'none',
             color: 'rgba(0, 0, 0, 0.8)',
@@ -35,28 +32,28 @@ const styles={
 }
 
 function NavigationBar() {
+    const mobileView = useMediaQuery('(max-width: 767px)');
+
+    const navigation =  <Breadcrumbs aria-label="breadcrumb" separator={'|'}>
+        <Link sx={styles.navigationLink} href="/upload-file" underline={'none'}
+        >
+            UPLOAD NEW FILE
+        </Link>
+        <Link sx={styles.navigationLink} href="/" underline={'none'}>
+            UPLOADED FILES
+        </Link>
+    </Breadcrumbs>
+
     return (
         <Box sx={styles.navigationContainer}>
             <Box sx={styles.contentContainer}>
-
-                <Typography variant="h4" component="p" paddingRight={4} fontFamily={'"Dancing Script", cursive'} fontWeight={800} color={'rgba(0, 0, 0, 0.8)'}>
-                    CompressYourFiles
-                </Typography>
-                <Breadcrumbs aria-label="breadcrumb">
-                    <Link sx={styles.navigationLink} color="inherit" href="/" padding={1} underline={'none'}>
-                        UPLOADED FILES
-                    </Link>
-                    <Link
-                        sx={styles.navigationLink}
-                        color="text.primary"
-                        href="/upload-file"
-                        aria-current="page"
-                        padding={1}
-                        underline={'none'}
-                    >
-                       UPLOAD NEW FILE
-                    </Link>
-                </Breadcrumbs>
+                <Link color="inherit" href="/" underline={'none'}>
+                    <Typography variant="h4" component="p" paddingRight={4} fontFamily={'"Dancing Script", cursive'} fontWeight={800} color={'rgba(0, 0, 0, 0.8)'}>
+                        CompressYourFiles
+                    </Typography>
+                   {mobileView && navigation }   {/* TODO: add collapse for mobile view*/ }
+                </Link>
+                {!mobileView && navigation}
             </Box>
 
         </Box>

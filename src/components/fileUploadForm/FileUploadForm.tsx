@@ -14,7 +14,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import {uploadFile} from "../../api";
 import getBase64 from "../../utils/getBase64";
 import {FileUploadFormData} from "../../interfaces/FileUploadFormData";
-import FileUpload from "../uploadedFile/FileUpload";
+import FileUpload from "../fileUpload/FileUpload";
 import InputSubtitle from "../inputSubtitle/InputSubtitle";
 
 const styles = {
