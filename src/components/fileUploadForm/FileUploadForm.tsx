@@ -18,17 +18,9 @@ import FileUpload from "../uploadedFile/FileUpload";
 import InputSubtitle from "../inputSubtitle/InputSubtitle";
 
 const styles = {
-    container: {
-        display: 'flex',
-        width: '100%',
-        minHeight: '100vh',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#f5f5f5',
-    },
     card: {
         minWidth: '300px',
-        width: '420px',
+        maxWidth: '420px',
         margin: '32px',
         height: '100%',
         padding: '32px 0',
@@ -86,7 +78,6 @@ function FileUploadForm({ setSnackbarOption }: Props) {
     };
 
     return (
-        <Box sx={styles.container}>
             <Card sx={styles.card}>
                 <CardContent sx={{padding: 0}}>
                     <Typography variant="h4" component="h1" align="center" padding={'0px 16px'} >
@@ -94,16 +85,17 @@ function FileUploadForm({ setSnackbarOption }: Props) {
                     </Typography>
                     <form style={styles.form} onSubmit={onSubmit}>
                         <Box sx={styles.textFieldWrapper}>
-                            <FormControl variant="filled" sx={{width: '100%', display: 'flex', flexFlow: 'column', alignItems: 'flex-start'}}>
+                            <FormControl>
                                 <InputLabel id="compressionRatioSelectLabel">Compress ratio</InputLabel>
                                 <Select
                                     labelId="compressionRatioSelectLabel"
                                     id="compressionRatioSelect"
                                     type={"number"}
+                                    label={"Compress ratio"}
                                     name={"compressRatio"}
                                     onChange={onFormChange}
                                     value={form?.compressRatio.toString()}
-                                    sx={{width: '100%', marginBottom: '8px'}}
+                                    sx={{width: '100%', marginBottom: '8px', backgroundColor: 'white'}}
                                 >
                                     {availableCompressionRatios.map((ratio) => (
                                         <MenuItem key={ratio} value={ratio}>{ratio}</MenuItem>)
@@ -128,7 +120,7 @@ function FileUploadForm({ setSnackbarOption }: Props) {
                     </form>
                 </CardContent>
             </Card>
-        </Box>);
+        );
 }
 
 export default FileUploadForm;

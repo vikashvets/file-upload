@@ -1,4 +1,4 @@
-import {Box, Button, Card} from "@mui/material";
+import {Box, Button} from "@mui/material";
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import React, {ChangeEvent} from "react";
 import {styled} from "@mui/material/styles";
@@ -25,14 +25,17 @@ function FileUpload({ file, onFileChange }: Props) {
 
     return (
         <Box>
-            <Card>
-                <Box padding={1.5} sx={{display: 'flex', alignItems: 'center'}}>
+            <Box sx={{marginBottom: '8px', border: '1px solid rgba(0, 0, 0, 0.2)', borderRadius: '4px'}}>
+                <Box padding={2} sx={{display: 'flex', alignItems: 'center'}}>
                     <InsertDriveFileIcon color={'disabled'}/>
-                    <InputSubtitle>
+                    <InputSubtitle color={'#000000'}>
                         {file?.name || 'No file selected'}
                     </InputSubtitle>
                 </Box>
-            </Card>
+            </Box>
+            <InputSubtitle>
+                Select file to compress. Currently system supports all image formats.
+            </InputSubtitle>
             <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
             <Button component={'label'} sx={{marginTop: '4px', padding: 0}}>
                 Select file
