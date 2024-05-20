@@ -7,9 +7,11 @@ import {
     Table,
     Typography,
     TableHead,
-    TableBody, TableRow,
+    TableBody,
+    TableRow,
     TableCell,
-    useMediaQuery
+    useMediaQuery,
+    Box
 } from "@mui/material";
 
 interface Props  {
@@ -20,22 +22,27 @@ function FileList({ setSnackbarOption }: Props) {
     const [files, setFiles] = useState<File[] | null>(null);
     const mobileView = useMediaQuery('(max-width: 1100px)');
 
-    const propsToDisplay = ['fileType', 'fileSize', 'compressRatio'];
+    const propsToDisplay = ['fileName', 'fileType', 'fileSize', 'compressRatio', 'compressedFileData'];
 
-    const fileTile = <Grid
-        gridTemplateColumns={'repeat(auto-fill, minmax(250px, 1fr))'}
-    >
-        {files?.map((file: File) => (
-            <FileCard file={file} key={file.id}/>
-        ))}
-    </Grid>
+    const fileTile = <Box width={'100%'}>
+        <Grid
+            gridTemplateColumns={'repeat(auto-fill, minmax(250px, 1fr))'}
+            display={'grid'}
+            gap={3}
+            padding={3}
+        >
+            {files?.map((file: File) => (
+                <FileCard file={file} key={file.id}/>
+            ))}
+        </Grid>
+    </Box>
 
     const filesTable =
         <Table sx={{maxWidth: '1000px'}}>
             <TableHead>
                 <TableRow>
                     {propsToDisplay.map((item: string) => (
-                        <TableCell key={item}>{item}</TableCell>
+                        <TableCell key={item} padding={item === 'compressedFileData' ? 'checkbox': 'normal' }>{item}</TableCell>
                     ))}
                 </TableRow>
             </TableHead>
@@ -44,7 +51,7 @@ function FileList({ setSnackbarOption }: Props) {
                     <TableRow key={file.id}>
                         {propsToDisplay.map((item: string) => (
                             // @ts-ignore
-                            <TableCell key={item}>{file[item]}</TableCell>
+                            <TableCell key={item}>{ item === 'compressedFileData' ? '' : file[item]}</TableCell>
                         ))}
 
                     </TableRow>
