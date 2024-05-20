@@ -1,16 +1,13 @@
 import {File} from "../../interfaces/File";
-import {Box, Card, CardContent, Collapse, Divider, Grid, IconButton, Typography} from "@mui/material";
-import {useState} from "react";
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import {Box, Card, CardContent, Divider, Grid, Typography} from "@mui/material";
 import DownloadIcon from '@mui/icons-material/Download';
+import ExpandComponent from "../../expandComponent/ExpandComponent";
 
 interface Props  {
     file: File
 }
 
 function FileList({ file }: Props) {
-    const [open, setOpen] = useState(false);
     const propsToDisplay = ['fileType', 'fileSize', 'compressRatio'];
 
     return (
@@ -40,25 +37,18 @@ function FileList({ file }: Props) {
                     ))}
                     </Box>
                     <Divider/>
-                    <Box sx={{display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-start'}}>
-                        <Collapse in={open} timeout="auto" unmountOnExit sx={{padding: '16px 8px 0px 8px'}}>
-                            <Typography variant="body2">
-                                {file.compressedFileData ?
-                                    `Compressed file is ready for download, compressed file size - ${file.compressedFileSize}` :
-                                    'Processing in progress: compressed file will be available for download soon.'}
-                            </Typography>
-                            {file.compressedFileData &&
-                                <a download={file.fileName} href={`${file.compressedFileData}`}><DownloadIcon/></a>
-                            }
-                        </Collapse>
-                        <IconButton
-                        aria-label="expand row"
-                        size="small"
-                        onClick={() => setOpen(!open)}
-                    >
-                        {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                    </IconButton>
-                    </Box>
+                    <ExpandComponent>
+                        <Box display={'flex'} alignItems={'center'} gap={1}>
+                        <Typography variant="body2">
+                            {file.compressedFileData ?
+                                `Compressed file is ready for download, compressed file size - ${file.compressedFileSize}` :
+                                'Processing in progress: compressed file will be available for download soon.'}
+                        </Typography>
+                        {file.compressedFileData &&
+                            <a download={file.fileName} href={`${file.compressedFileData}`}><DownloadIcon/></a>
+                        }
+                        </Box>
+                    </ExpandComponent>
                 </Grid>
             </CardContent>
         </Card>)

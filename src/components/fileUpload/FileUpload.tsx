@@ -25,8 +25,8 @@ function FileUpload({ file, onFileChange }: Props) {
 
     return (
         <Box>
-            <Box sx={{marginBottom: '8px', border: '1px solid rgba(0, 0, 0, 0.2)', borderRadius: '4px'}}>
-                <Box padding={2} sx={{display: 'flex', alignItems: 'center'}}>
+            <Box marginBottom={1} border={'1px solid rgba(0, 0, 0, 0.2)'} borderRadius={0.5}>
+                <Box padding={2} display={'flex'} alignItems={'center'}>
                     <InsertDriveFileIcon color={'disabled'}/>
                     <InputSubtitle color={'#000000'}>
                         {file?.name || 'No file selected'}
@@ -36,7 +36,7 @@ function FileUpload({ file, onFileChange }: Props) {
             <InputSubtitle>
                 Select file to compress. Currently system supports all image formats.
             </InputSubtitle>
-            <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
+            <Box display={'flex'} justifyContent={'flex-end'}>
             <Button component={'label'} sx={{marginTop: '4px', padding: 0, color: 'rgba(0, 0, 0, 0.8)'}}>
                 Select file
                 <VisuallyHiddenInput type="file" name={'file'} onChange={onFileChange}/>

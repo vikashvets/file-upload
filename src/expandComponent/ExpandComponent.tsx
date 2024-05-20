@@ -12,8 +12,8 @@ function ExpandComponent({ children, beforeCollapseContent }: Props) {
     const [open, setOpen] = useState(false);
 
     return (
-            <Box sx={{display: 'flex', flexFlow: 'column', justifyContent: 'flex-end', width: '100%'}}>
-                <Box sx={{display: 'flex', justifyContent: 'flex-end', alignItems: 'center'}}>
+            <Box display={'flex'} flexDirection={'column'} justifyContent={'flex-end'} width={'100%'}>
+                <Box display={'flex'} justifyContent={'flex-end'} alignItems={'center'}>
                     {beforeCollapseContent}
                 <IconButton
                 aria-label="expand row"
