@@ -1,8 +1,13 @@
-const configureWsClient = (onMessage: (data: any) => void) => {
-    const socket = new WebSocket(process.env.REACT_APP_WS_API_URL || '');
+import { v4 as uuidv4 } from 'uuid';
 
-    socket.onopen = function(e) {
-        socket.send("Client connected to the server");
+export const wsClientId = uuidv4();
+
+const configureWsClient = (onMessage: (data: any) => void) => {
+    const connectionUrl = `${process.env.REACT_APP_WS_API_URL}?${wsClientId}`;
+    const socket = new WebSocket(connectionUrl);
+
+    socket.onopen = function() {
+        socket.send(`Client ${wsClientId} connected to the server`);
     };
 
     socket.onmessage = function(event) {
@@ -11,14 +16,14 @@ const configureWsClient = (onMessage: (data: any) => void) => {
 
     socket.onclose = function(event) {
         if (event.wasClean) {
-            console.log(`[close] Connection closed properly, code=${event.code} reason=${event.reason}`);
+            console.log(`Connection for client ${wsClientId} closed properly, code=${event.code} reason=${event.reason}`);
         } else {
-            console.log('[close] Connection died');
+            console.log(`Connection for client ${wsClientId} died`);
         }
     };
 
     socket.onerror = function(error) {
-        console.log(`[error]`);
+        console.log(`Error ${error} happened for client ${wsClientId}`);
     };
 };
 
