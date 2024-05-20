@@ -1,14 +1,16 @@
 import {File} from "../../interfaces/File";
 import {Box, Card, CardContent, Divider, Grid, Typography} from "@mui/material";
-import DownloadIcon from '@mui/icons-material/Download';
 import ExpandComponent from "../../expandComponent/ExpandComponent";
+import {FileProperty} from "../../types/FileProperty";
+import DownloadLink from "../../downloadLink/DownloadLink";
+import React from "react";
 
 interface Props  {
     file: File
 }
 
 function FileList({ file }: Props) {
-    const propsToDisplay = ['fileType', 'fileSize', 'compressRatio'];
+    const propsToDisplay: FileProperty[] = ['fileType', 'fileSize', 'compressRatio'];
 
     return (
         <Card
@@ -24,13 +26,12 @@ function FileList({ file }: Props) {
                     gap={2}
                 >
                     <Box padding={'0px 8px 24px 8px'}>
-                    {propsToDisplay.filter(prop => prop !== "name").map((item:string) => (
+                    {propsToDisplay.map((item: FileProperty) => (
                         <Box key={item} alignItems={'center'} display={'flex'}>
                             <Typography fontWeight={'600'} textTransform={'capitalize'} key={item} pt='2' fontSize='xs'>
                                 {`${item}:`}
                             </Typography>
                             <Typography paddingLeft={1} pt='2' fontSize='xs' fontWeight={'200'}>
-                                {/*@ts-ignore*/}
                                 { file[item]}
                             </Typography>
                         </Box>
@@ -45,7 +46,7 @@ function FileList({ file }: Props) {
                                 'Processing in progress: compressed file will be available for download soon.'}
                         </Typography>
                         {file.compressedFileData &&
-                            <a download={file.fileName} href={`${file.compressedFileData}`}><DownloadIcon/></a>
+                            <DownloadLink href={file.compressedFileData} name={`Compressed-${file.fileName}`}/>
                         }
                         </Box>
                     </ExpandComponent>

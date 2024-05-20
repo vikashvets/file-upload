@@ -13,6 +13,8 @@ import {
     useMediaQuery,
     Box
 } from "@mui/material";
+import {FileProperty} from "../../types/FileProperty";
+import DownloadLink from "../../downloadLink/DownloadLink";
 
 interface Props  {
     setSnackbarOption: Dispatch<SetStateAction<{}>>
@@ -22,7 +24,15 @@ function FileList({ setSnackbarOption }: Props) {
     const [files, setFiles] = useState<File[] | null>(null);
     const mobileView = useMediaQuery('(max-width: 1100px)');
 
-    const propsToDisplay = ['fileName', 'fileType', 'fileSize', 'compressRatio', 'compressedFileData'];
+    useEffect(() => {
+        getFileList().then((response) => {
+            setFiles(response.data);
+        }).catch((error) => {
+            setSnackbarOption({ snackbar: { open: true },  alert: { severity: 'error' }, content: error.message});
+        });
+    }, [setSnackbarOption]);
+
+    const propsToDisplay: FileProperty[] = ['fileName', 'fileType', 'fileSize', 'compressRatio', 'compressedFileSize', 'compressedFileData'];
 
     const fileTile = <Box width={'100%'}>
         <Grid
@@ -42,30 +52,32 @@ function FileList({ setSnackbarOption }: Props) {
             <TableHead>
                 <TableRow>
                     {propsToDisplay.map((item: string) => (
-                        <TableCell key={item} padding={item === 'compressedFileData' ? 'checkbox': 'normal' }>{item}</TableCell>
+                        item === 'compressedFileData' ?
+                            <TableCell key={item} padding={'checkbox'} align={'center'}/> :
+                            <TableCell key={item} align={'center'} sx={{textTransform: "capitalize"}}>
+                                <Typography variant="body2" fontFamily={'"Raleway", cursive'} fontWeight={600} fontSize={'1rem'}>
+                                    {item.replace(/([A-Z])/g, " $1")}
+                                </Typography>
+                            </TableCell>
                     ))}
                 </TableRow>
             </TableHead>
             <TableBody>
                 {files?.map((file: File) => (
                     <TableRow key={file.id}>
-                        {propsToDisplay.map((item: string) => (
-                            // @ts-ignore
-                            <TableCell key={item}>{ item === 'compressedFileData' ? '' : file[item]}</TableCell>
+                        {propsToDisplay.map((item: FileProperty) => (
+                            item === 'compressedFileData' ?
+                                <TableCell key={item} align={'center'}>
+                                    <DownloadLink href={file.compressedFileData} name={`Compressed-${file.fileName}`}/>
+                                </TableCell> :
+                                <TableCell key={item} align={'center'}>
+                                    {file[item]}
+                                </TableCell>
                         ))}
-
                     </TableRow>
                 ))}
             </TableBody>
         </Table>;
-
-    useEffect(() => {
-        getFileList().then((response) => {
-            setFiles(response.data);
-        }).catch((error) => {
-            setSnackbarOption({ snackbar: { open: true },  alert: { severity: 'error' }, content: error.message});
-        });
-    }, [setSnackbarOption]);
 
     return (
         <>
