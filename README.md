@@ -2,6 +2,11 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Application Setup
+
+Before you start running the application, you need to set up the environment variables.
+You need to create `.env` file in the root of the project. You can add there variables from [.env.sample](.env.sample) file.
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -38,6 +43,21 @@ If you aren't satisfied with the build tool and configuration choices, you can `
 Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+
+## Run project in Docker
+
+Before you start running the docker container, you need to set up enviroment variables, ad described in [Application Setup](#application-setup) section.
+
+After that, to start docker container, run the following command:
+
+```bash
+docker build -t file-upload:1.0 . && docker run -p 3000:80 --name file-upload-ui file-upload:1.0
+```
+Or for running docker-compose, run the following command:
+
+```bash
+docker-compose build && docker-compose up
+```
 
 ## Learn More
 
