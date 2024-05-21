@@ -1,6 +1,7 @@
 import axios  from 'axios';
 import { FileUploadPayload } from "./interfaces/FileUploadPayload";
 import {wsClientId} from "./configureWsClient";
+import {PaginationData} from "./interfaces/PaginationData";
 
 const baseURL = process.env.REACT_APP_API_URL;
 
@@ -16,5 +17,5 @@ axiosInstance.interceptors.request.use(function (config) {
 
 export const uploadFile = (data: FileUploadPayload) => axiosInstance.post('/api/upload-file', data);
 
-export const getFileList = () => axiosInstance.get('/api/files');
+export const getFileList = (data: PaginationData) => axiosInstance.get('/api/files', { params: data });
 

@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
+import React, {Dispatch, SetStateAction, useCallback, useEffect, useState} from "react";
 import {getFileList} from "../../api";
 import {File} from "../../interfaces/File";
 import FileCard from "../fileCard/FileCard";
@@ -15,6 +15,8 @@ import {
 } from "@mui/material";
 import {FileProperty} from "../../types/FileProperty";
 import DownloadLink from "../../downloadLink/DownloadLink";
+import {PaginationData} from "../../interfaces/PaginationData";
+import Pagination from "../pagination/Pagination";
 
 interface Props  {
     setSnackbarOption: Dispatch<SetStateAction<{}>>
@@ -22,15 +24,25 @@ interface Props  {
 
 function FileList({ setSnackbarOption }: Props) {
     const [files, setFiles] = useState<File[] | null>(null);
+    const [pagination, setPagination] = useState<PaginationData>({
+        totalItems: 0,
+        page: 1,
+        perPage: 10
+    });
     const mobileView = useMediaQuery('(max-width: 1100px)');
 
-    useEffect(() => {
-        getFileList().then((response) => {
-            setFiles(response.data);
+    const onPaginationClick = useCallback((page: number) => {
+        getFileList({page, perPage: pagination.perPage}).then((response) => {
+            setFiles(response.data.files);
+            setPagination(response.data.pagination);
         }).catch((error) => {
             setSnackbarOption({ snackbar: { open: true },  alert: { severity: 'error' }, content: error.message});
         });
-    }, [setSnackbarOption]);
+    }, [setSnackbarOption, pagination.perPage]);
+
+    useEffect(() => {
+        onPaginationClick(1);
+    }, [onPaginationClick]);
 
     const propsToDisplay: FileProperty[] = ['fileName', 'fileType', 'fileSize', 'compressRatio', 'compressedFileSize', 'compressedFileData'];
 
@@ -84,7 +96,10 @@ function FileList({ setSnackbarOption }: Props) {
             <Typography variant="h4" component="h1" align="center" margin={'32px 16px'} fontFamily={'"Raleway", cursive'} >
                Already uploaded files
             </Typography>
+            <Box display={'flex'} flexDirection={'column'} alignItems={'flex-end'}>
             {mobileView ? fileTile : filesTable}
+            <Pagination pagination={pagination} onPaginationClick={onPaginationClick}/>
+            </Box>
         </>
     );
 }
