@@ -7,32 +7,8 @@ import {SnackbarConfig} from "./interfaces/SnackbarConfig";
 import FileUploadForm from "./components/fileUploadForm/FileUploadForm";
 import PageContainer from "./components/pageContainer/PageContainer";
 import './App.css';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-const theme = createTheme({
-    palette: {
-        secondary: {
-            main: '#a5e8ef',
-        },
-        // @ts-ignore
-        custom: {
-            transparentWhite: {
-                main: 'rgba(255, 255, 255, 0.7)'
-            },
-            transparentBlack: {
-                main: 'rgba(0, 0, 0, 0.7)',
-                light: 'rgba(0, 0, 0, 0.6)',
-                dark: 'rgba(0, 0, 0, 0.8)'
-            },
-            border: {
-                main: 'rgba(0, 0, 0, 0.2)',
-                // light: 'rgba(0, 0, 0, 0.1)',
-                // dark: 'rgba(0, 0, 0, 0.3)'
-            }
-        }
-    },
-});
-
+import { ThemeProvider } from '@mui/material/styles';
+import muiTheme from "./utils/muiTheme";
 
 function App() {
     const [snackbarOptions, setSnackbarOption] = useState<SnackbarConfig>({
@@ -69,7 +45,7 @@ function App() {
 
     return (
       <>
-              <ThemeProvider theme={theme}>
+              <ThemeProvider theme={muiTheme}>
               <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<PageContainer><FileUploadHome setSnackbarOption={setSnackbarOption}/></PageContainer>} />

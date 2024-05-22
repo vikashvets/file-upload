@@ -11,9 +11,9 @@ function NavigationBar() {
             minHeight: '80px',
             width: '100%',
             top:0,
-            backgroundColor: 'custom.transparentWhite.main',
+            backgroundColor: 'transparentWhite.main',
             zIndex: 10,
-            //border: '1px solid custom.transparentBlack.main',
+            //border: '1px solid transparentBlack.main',
             display: 'flex',
         },
         contentContainer: {
@@ -25,10 +25,10 @@ function NavigationBar() {
         navigationLink: {
             transition: '0.3s',
             padding: 1,
-            color: 'custom.transparentBlack.main',
+            color: 'transparentBlack.main',
             ":hover": {
                 textDecoration: 'none',
-                color: 'custom.transparentBlack.dark',
+                color: 'transparentBlack.dark',
                 padding: '16px',
                 transition: '0.3s',
             }
@@ -52,7 +52,7 @@ function NavigationBar() {
             paddingRight={mobileView ? 1: 4}
             fontFamily={'"Dancing Script", cursive'}
             fontWeight={800}
-            color={'custom.transparentBlack.dark'}
+            color={'transparentBlack.dark'}
         >
             CompressYourFiles
         </Typography>

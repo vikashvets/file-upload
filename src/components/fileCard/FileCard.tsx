@@ -15,7 +15,7 @@ function FileList({ file }: Props) {
     return (
         <Card
             key={file.id}
-            sx={{borderRadius: '4px', border: '1px solid', borderColor: 'custom.border.main' }}
+            sx={{borderRadius: '4px', border: '1px solid', borderColor: 'border.main' }}
         >
             <Typography fontWeight={'600'} textTransform={'capitalize'} pt='2' fontSize='xs' padding={2}>
                 {file.fileName}

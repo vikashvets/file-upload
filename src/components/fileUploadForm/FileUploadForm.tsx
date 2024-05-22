@@ -114,7 +114,7 @@ function FileUploadForm({ setSnackbarOption }: Props) {
                                         padding: '12px',
                                         marginTop: '40px',
                                         backgroundColor: 'secondary.main',
-                                        color: 'custom.transparentBlack.dark',
+                                        color: 'transparentBlack.dark',
                                         ":hover": {
                                             backgroundColor: 'secondary.dark'
                                         }}
