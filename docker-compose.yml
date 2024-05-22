@@ -4,10 +4,10 @@ services:
     build:
       context: ./
     ports:
-      - 3000:80
+      - ${REACT_APP_PORT}:${REACT_APP_NGINX_PORT}
     environment:
-      REACT_APP_API_URL: http://localhost:3001
-      REACT_APP_WS_API_URL: ws://localhost:8080
+      REACT_APP_API_URL: ${REACT_APP_API_URL}
+      REACT_APP_WS_API_URL: ${REACT_APP_WS_API_URL}
     volumes:
       - ./ngnix.conf:/etc/nginx/conf.d/default.conf
 
