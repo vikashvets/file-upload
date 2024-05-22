@@ -109,7 +109,16 @@ function FileUploadForm({ setSnackbarOption }: Props) {
                                 <FileUpload file={form.file} onFileChange={onFileChange}/>
                                 <Button
                                     type={'submit'}
-                                    sx={{width: '100%', padding: '12px', marginTop: '40px', backgroundColor: '#a5e8ef', color: 'rgba(0, 0, 0, 0.8)'}}
+                                    sx={{
+                                        width: '100%',
+                                        padding: '12px',
+                                        marginTop: '40px',
+                                        backgroundColor: 'secondary.main',
+                                        color: 'custom.transparentBlack.dark',
+                                        ":hover": {
+                                            backgroundColor: 'secondary.dark'
+                                        }}
+                                    }
                                     variant="contained"
                                     startIcon={<CloudUploadIcon/>}
                                 >

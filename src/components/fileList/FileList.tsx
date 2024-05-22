@@ -96,10 +96,8 @@ function FileList({ setSnackbarOption }: Props) {
             <Typography variant="h4" component="h1" align="center" margin={'32px 16px'} fontFamily={'"Raleway", cursive'} >
                Already uploaded files
             </Typography>
-            <Box display={'flex'} flexDirection={'column'} alignItems={'flex-end'}>
             {mobileView ? fileTile : filesTable}
-            <Pagination pagination={pagination} onPaginationClick={onPaginationClick}/>
-            </Box>
+                <Pagination pagination={pagination} onPaginationClick={onPaginationClick}/>
         </>
     );
 }

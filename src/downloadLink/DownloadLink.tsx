@@ -9,7 +9,7 @@ interface Props  {
 function DownloadLink({ href, name}: Props) {
 
     return (
-        <Link download={name} href={`${href}`}><DownloadIcon/></Link>
+        <Link download={name} href={`${href}`} color={'secondary.dark'}><DownloadIcon/></Link>
     )
 }
 

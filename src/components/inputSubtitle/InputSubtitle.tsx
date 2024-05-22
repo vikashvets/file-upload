@@ -8,7 +8,7 @@ interface Props  {
 
 function InputSubtitle({ children, color }: Props) {
     return (
-        <Typography variant="body2" component="p" align="left" paddingLeft={1} fontSize={13} color={color || 'rgba(0, 0, 0, 0.6)'}>
+        <Typography variant="body2" component="p" align="left" paddingLeft={1} fontSize={13} color={color || 'custom.transparentBlack.light'}>
             {children}
         </Typography>
     )

@@ -13,6 +13,6 @@ export default function ListPagination({pagination, onPaginationClick}: Props) {
        count={pagesCount}
        variant={'outlined'}
        onChange={(e, page) => onPaginationClick(page)}
-       sx={{margin: 1}}
+       sx={{margin: 1, width: '100%', display: 'flex', justifyContent: 'flex-end', maxWidth: '1000px'}}
    />
 }

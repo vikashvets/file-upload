@@ -12,7 +12,7 @@ function ExpandComponent({ children, beforeCollapseContent }: Props) {
     const [open, setOpen] = useState(false);
 
     return (
-            <Box display={'flex'} flexDirection={'column'} justifyContent={'flex-end'} width={'100%'}>
+            <Box display={'flex'} flexDirection={'column'} justifyContent={'flex-end'} width={'100%'} alignItems={'flex-start'}>
                 <Box display={'flex'} justifyContent={'flex-end'} alignItems={'center'}>
                     {beforeCollapseContent}
                 <IconButton
