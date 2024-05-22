@@ -1,10 +1,10 @@
 export interface File {
     fileName: string,
     fileType: string,
-    fileSize: number,
+    fileSize: number | string,
     id: number,
     compressedFileData: string,
-    compressedFileSize: number,
+    compressedFileSize: number | string,
     compressRatio: string
 
 }

@@ -8,6 +8,6 @@ export interface SnackbarConfig {
         severity?: "error" | "warning" | "info" | "success",
         variant?: "filled" | "outlined" | "standard",
     },
-    content?: string | JSX.Element,
+    content?: string | Element,
 }
 
