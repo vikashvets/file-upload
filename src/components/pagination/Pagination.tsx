@@ -3,11 +3,11 @@ import React from "react";
 import {PaginationData} from "../../interfaces/PaginationData";
 
 interface Props  {
-    pagination: PaginationData,
+    pagination?: PaginationData,
     onPaginationClick: (page: number) => void
 }
 export default function ListPagination({pagination, onPaginationClick}: Props) {
-    const pagesCount: number = Math.ceil((pagination.totalItems || 1) / pagination.perPage);
+    const pagesCount: number = pagination ? Math.ceil((pagination.totalItems || 1) / pagination.perPage) : 1;
 
    return <Pagination
        count={pagesCount}

@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, useCallback, useEffect, useState} from "react";
+import React, {Dispatch, SetStateAction, useCallback, useState} from "react";
 import {getFileList} from "../../api";
 import {File} from "../../interfaces/File";
 import FileCard from "../fileCard/FileCard";
@@ -17,32 +17,32 @@ import {FileProperty} from "../../types/FileProperty";
 import DownloadLink from "../../downloadLink/DownloadLink";
 import {PaginationData} from "../../interfaces/PaginationData";
 import Pagination from "../pagination/Pagination";
+import useFetch from "../../hooks/useFetch";
+import {PaginatedListResponse} from "../../interfaces/PaginatedListResponse";
 
 interface Props  {
     setSnackbarOption: Dispatch<SetStateAction<{}>>
 }
 
 function FileList({ setSnackbarOption }: Props) {
-    const [files, setFiles] = useState<File[] | null>(null);
     const [pagination, setPagination] = useState<PaginationData>({
-        totalItems: 0,
         page: 1,
         perPage: 10
     });
+
+    const { data, error} = useFetch<PaginatedListResponse<File>, PaginationData>(
+        getFileList,
+        pagination,
+        [pagination]
+    );
+
     const mobileView = useMediaQuery('(max-width: 1100px)');
 
     const onPaginationClick = useCallback((page: number) => {
-        getFileList({page, perPage: pagination.perPage}).then((response) => {
-            setFiles(response.data.files);
-            setPagination(response.data.pagination);
-        }).catch((error) => {
-            setSnackbarOption({ snackbar: { open: true },  alert: { severity: 'error' }, content: error.message});
-        });
-    }, [setSnackbarOption, pagination.perPage]);
+        setPagination({...pagination, page});
+    }, [pagination]);
 
-    useEffect(() => {
-        onPaginationClick(1);
-    }, [onPaginationClick]);
+    if (error) { setSnackbarOption({ snackbar: { open: true },  alert: { severity: 'error' }, content: error.message}) }
 
     const propsToDisplay: FileProperty[] = ['fileName', 'fileType', 'fileSize', 'compressRatio', 'compressedFileSize', 'compressedFileData'];
 
@@ -53,7 +53,7 @@ function FileList({ setSnackbarOption }: Props) {
             gap={3}
             padding={3}
         >
-            {files?.map((file: File) => (
+            {data?.list.map((file: File) => (
                 <FileCard file={file} key={file.id}/>
             ))}
         </Grid>
@@ -75,7 +75,7 @@ function FileList({ setSnackbarOption }: Props) {
                 </TableRow>
             </TableHead>
             <TableBody>
-                {files?.map((file: File) => (
+                {data?.list.map((file: File) => (
                     <TableRow key={file.id}>
                         {propsToDisplay.map((item: FileProperty) => (
                             item === 'compressedFileData' ?
@@ -97,7 +97,7 @@ function FileList({ setSnackbarOption }: Props) {
                Already uploaded files
             </Typography>
             {mobileView ? fileTile : filesTable}
-                <Pagination pagination={pagination} onPaginationClick={onPaginationClick}/>
+            <Pagination pagination={data?.pagination} onPaginationClick={onPaginationClick}/>
         </>
     );
 }
