@@ -20,6 +20,7 @@ import Pagination from "../pagination/Pagination";
 import useFetch from "../../hooks/useFetch";
 import {PaginatedListResponse} from "../../interfaces/PaginatedListResponse";
 import {SnackbarConfig} from "../../interfaces/SnackbarConfig";
+import CoveringLoader from "../CoveringLoader/CoveringLoader";
 
 interface Props  {
     setSnackbarOption: Dispatch<SetStateAction<SnackbarConfig>>
@@ -31,7 +32,7 @@ function FileList({ setSnackbarOption }: Props) {
         perPage: 10
     });
 
-    const { data, error} = useFetch<PaginatedListResponse<File>, PaginationData>(
+    const { data, error, loading} = useFetch<PaginatedListResponse<File>, PaginationData>(
         getFileList,
         pagination,
         [pagination]
@@ -61,7 +62,8 @@ function FileList({ setSnackbarOption }: Props) {
     </Box>
 
     const filesTable =
-        <Table sx={{maxWidth: '1000px'}}>
+        <Box maxWidth={'1000px'} width={'100%'} minHeight={'670px'}>
+        <Table>
             <TableHead>
                 <TableRow>
                     {propsToDisplay.map((item: string) => (
@@ -90,13 +92,15 @@ function FileList({ setSnackbarOption }: Props) {
                     </TableRow>
                 ))}
             </TableBody>
-        </Table>;
+        </Table>
+        </Box>
 
     return (
         <>
             <Typography variant="h4" component="h1" align="center" margin={'32px 16px'} fontFamily={'"Raleway", cursive'} >
                Already uploaded files
             </Typography>
+            {loading && <CoveringLoader/>}
             {mobileView ? fileTile : filesTable}
             <Pagination pagination={data?.pagination} onPaginationClick={onPaginationClick}/>
         </>
