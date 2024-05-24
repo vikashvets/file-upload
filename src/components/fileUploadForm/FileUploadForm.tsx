@@ -16,6 +16,7 @@ import getBase64 from "../../utils/getBase64";
 import {FileUploadFormData} from "../../interfaces/FileUploadFormData";
 import FileUpload from "../fileUpload/FileUpload";
 import InputSubtitle from "../inputSubtitle/InputSubtitle";
+import {SnackbarConfig} from "../../interfaces/SnackbarConfig";
 
 const styles = {
     card: {
@@ -42,7 +43,7 @@ const styles = {
 };
 
 interface Props  {
-    setSnackbarOption: Dispatch<SetStateAction<{}>>
+    setSnackbarOption: Dispatch<SetStateAction<SnackbarConfig>>
 }
 
 function FileUploadForm({ setSnackbarOption }: Props) {

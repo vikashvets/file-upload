@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 import { AxiosResponse } from "axios"
 
-export default function useFetch<Data, Params> (
+export default function useFetch<Data, Params>(
     request: (params: Params) => Promise<AxiosResponse<Data>>,
     params: Params,
-    dependencies: any[]
+    dependencies: unknown[]
 ){
 
     const [data,setData] = useState<Data | null>(null)

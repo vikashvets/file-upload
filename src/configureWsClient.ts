@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export const wsClientId = uuidv4();
 
-const configureWsClient = (onMessage: (data: any) => void) => {
+const configureWsClient = (onMessage: (data: string) => void) => {
     const connectionUrl = `${process.env.REACT_APP_WS_API_URL}?${wsClientId}`;
     const socket = new WebSocket(connectionUrl);
 

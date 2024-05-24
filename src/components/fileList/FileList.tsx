@@ -19,9 +19,10 @@ import {PaginationData} from "../../interfaces/PaginationData";
 import Pagination from "../pagination/Pagination";
 import useFetch from "../../hooks/useFetch";
 import {PaginatedListResponse} from "../../interfaces/PaginatedListResponse";
+import {SnackbarConfig} from "../../interfaces/SnackbarConfig";
 
 interface Props  {
-    setSnackbarOption: Dispatch<SetStateAction<{}>>
+    setSnackbarOption: Dispatch<SetStateAction<SnackbarConfig>>
 }
 
 function FileList({ setSnackbarOption }: Props) {
